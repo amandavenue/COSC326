@@ -1,0 +1,5 @@
+package Quilt;
+
+import javax.swing.*;
+
+public QuiltPanel extends JPanel

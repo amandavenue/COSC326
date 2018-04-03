@@ -1,0 +1,17 @@
+public class Test{
+
+    public static void main (String[] agrs){
+
+        int red = 2;
+        int green = 3;
+        int blue = 1;
+
+        if (red == green && green == blue) {
+            System.out.println( "Gold");
+        } else if (red == green || (blue < green && blue < red)) {
+            System.out.println( "Blue");
+        } else if (green == blue || (red < green && red < blue)) {
+            System.out.println("Red");
+        } else if (blue == red || (green < red && green < blue)) {
+            System.out.println("Green");
+        }

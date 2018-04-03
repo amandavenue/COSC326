@@ -1,0 +1,151 @@
+import java.util.*;
+
+/**
+   A Class for the Arithmetic etude in Cosc326 SS 2018.
+   //DESCRIPTION
+   @author Amanda Veldman (4389944)
+*/
+
+public class Arithmetic {
+
+    public static Integer goal;
+    
+    public static void main (String [] args){
+
+        Scanner sc = new Scanner(System.in);
+        String numbers = sc.nextLine();
+        String constraints = sc.nextLine();
+
+        ArrayList<Integer> nums = new ArrayList<Integer>();
+
+        String[] tokens = new String[numbers.length()];
+        tokens = numbers.split(" ");
+
+        // add each number to my array list. convert char to Integer
+        for (String token : tokens){
+            nums.add(Integer.parseInt(token));
+        }
+
+        String[] rules = new String[2];
+        rules = constraints.split(" ");
+
+        Arithmetic.goal = Integer.parseInt(rules[0]);
+        String order = rules[1];
+
+        System.out.println(Combinations(nums, goal, 0, order));
+    }
+
+    public static String Combinations(ArrayList<Integer> nums, int total, int index, String order){
+
+        int min = 0;
+        String operands = "";
+
+        for (int i = 0; i < nums.size(); i++){
+            min += nums.get(i);
+        }
+
+        String answer = "";
+        String result = "";
+
+        if (min <= total){
+            //Left to right order
+            if (order.equals("L")){
+                answer = SearchLeftToRight(nums, index, operands);
+                // Normal order
+            } else {
+                answer = SearchNormal(nums, index, operands);
+            }
+            if (!answer.equals("impossible")){
+                result = result + (order + " ");
+                for (int i = 0 ; i < (nums.size()); i++){
+                    if (i == 0){
+                        result = result + (nums.get(i) + " ");
+                    } else {
+                        result = result + (answer.charAt(i-1) + " " +(nums.get(i)) + " ");
+                    }
+                    System.out.println();
+                }
+            }
+            return result;
+        }
+        //return (order + " impossible");
+    }
+
+    public static String SearchLeftToRight(ArrayList<Integer> nums, int index, String operands){
+
+        int result = nums.get(0);
+        String addLeft = "";
+        String multiplyRight = "";
+
+        for (int i = 0; i < operands.length(); i++){
+            if ((operands.length() > 1) && operands.charAt(i) == '+'){
+                result += nums.get(i+1);
+            } else {
+                result *= nums.get(i+1);
+            }
+        }
+
+        // Success case
+        if (index == (nums.size()-1)){
+            if (goal == result){
+                return operands;
+            } else {
+                return "impossible";
+            }
+        }
+
+        //Search addition branch
+        addLeft = SearchLeftToRight(nums, (index + 1), (operands + "+"));
+        if (addLeft != "impossible"){
+            return addLeft;
+        } else {
+            //Search multiplication branch
+            multiplyRight = SearchLeftToRight(nums, (index + 1), (operands + "*"));
+            if (multiplyRight != "impossible"){
+                return multiplyRight;
+            }
+        }
+        return "impossible";
+    }
+
+    public static boolean SearchNormal(ArrayList<Integer> nums, int total, String operands){
+
+        int result = nums.get(0);
+        int temp = 0;
+        String addLeft = "";
+        String multiplyRight = "";
+
+        for (int i = 0; i < operands.length(); i++){
+            if (operands.charAt(i) == '*'){
+                temp = nums.get(i) * nums.get(i+1);
+                nums.get(i+1) = temp;
+                nums.get(i) = 0;
+            }
+            for (n = 0; n < nums.size(); n++){
+                result += nums.get(n);
+            }
+        }
+
+        //Success case
+        if (index == (nums.size()-1)){
+            if (goal == result){
+                return operands;
+            } else {
+                return "impossible";
+            }
+        }
+
+        //Search addition branch
+        addLeft = SearchNormal(nums, (index + 1), (operands + "+"));
+        if (addLeft != "impossible"){
+            return addLeft;
+        } else {
+            //Search multiplication branch
+            multiplyRight = SearchNormal(nums, (index + 1), (operands + "*"));
+            if (multiplyRight != "impossible"){
+                return multiplyRight;
+            }
+        }
+        return "impossible";
+    }    
+}

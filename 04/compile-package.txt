@@ -1,0 +1,8 @@
+Have a folder existing,
+e.g. iota
+
+To compile:
+javac -d . *.java
+
+To run:
+iota.ClassName

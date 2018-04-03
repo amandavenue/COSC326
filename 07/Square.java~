@@ -1,0 +1,33 @@
+package Quilt;
+
+import java.util.*;
+import java.awt.*;
+
+public class Square {
+
+    double scale;
+    Color colour;
+    int layer;
+    Point middle;
+    int currentLayer = 1;
+
+    public Square(double scale, Color colour, int layer){
+        this.scale = scale;
+        this.colour = colour;
+        this.layer = layer;
+        middle = new Point (300, 300);
+    }
+
+    public double getScale(){
+        return scale;
+    }
+
+    public int getLayer(){
+        return layer;
+    }
+
+    public Color getColour(){
+        return colour;
+    }
+
+}

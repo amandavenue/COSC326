@@ -1,0 +1,42 @@
+public class JSADColourDay{
+
+    public static String[] calander = new String [20];
+    
+    public static void main (String [] args){
+
+        calander[0] = "NO COLOUR";
+        colours(calander);
+
+    }
+
+    public static String[] colours(String[] c){
+
+        // checks which days in calander will be primes
+        for (int i = 1; i < c.length; i++){
+            if ((i+1)%2 == 0){
+                for (int j = 3; j*j <= (i+1); j+=2){
+                    if ((i+1)%j == 0){
+                        //the index is not a prime
+                    }
+                }
+            } else {
+                // works out what day of the week a day is
+                switch ((i+1)%7){
+                    case 1 : case 4 : // Monday and Thursday
+                        c[i] = "Red";
+                        break;
+                    case 2 : case 5 : // Tuesday and Friday
+                        c[i] = "Green";
+                        break;
+                    case 3 : case 6 : // Wednesday and Saturday
+                        c[i] = "Blue";
+                        break;
+                    case 0 : //Sunday
+                        c[i] = "Gold";
+                        // Day 7 is the only prime Sunday
+                        break;
+                }
+            }
+        }
+    }
+}
